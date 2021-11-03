@@ -17,7 +17,7 @@
       </div>
       @endif
       <button wire:click="create()" class="bg-gray-800 text-white font-bold py-2 px-4 rounded my-3 pt-2">
-        Create Posts
+        Buat Daftar Wisata
       </button>
       @if( $isModalOpen) @include('livewire.create') @endif
       <table class="table-fixed w-full">
