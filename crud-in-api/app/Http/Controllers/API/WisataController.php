@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Models\Program;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\ProgramResource;
+use App\Http\Resources\WisataResource;
+use App\Models\Wisata;
 
-class ProgramController extends Controller
+class WisataController extends Controller
 {
     public function index()
     {
-        $data = Program::latest()->get();
+        $data = Wisata::latest()->get();
         return response()->json([
-            ProgramResource::collection($data),
-            'Programs fetched.',
+            WisataResource::collection($data),
+            'Wisatas fetched.',
         ]);
     }
     /**
@@ -35,7 +35,7 @@ class ProgramController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors());
         }
-        $program = Program::create([
+        $wisata = Wisata::create([
             'name' => $request->name,
             'address' => $request->address,
             'description' => $request->description,
@@ -43,8 +43,8 @@ class ProgramController extends Controller
         ]);
 
         return response()->json([
-            'Program created successfully.',
-            new ProgramResource($program),
+            'Wisata created successfully.',
+            new WisataResource($wisata),
         ]);
     }
     /**
@@ -55,11 +55,11 @@ class ProgramController extends Controller
      */
     public function show($id)
     {
-        $program = Program::find($id);
-        if (is_null($program)) {
+        $wisata = Wisata::find($id);
+        if (is_null($wisata)) {
             return response()->json('Data not found', 404);
         }
-        return response()->json([new ProgramResource($program)]);
+        return response()->json([new WisataResource($wisata)]);
     }
     /**
      * Update the specified resource in storage.
@@ -68,7 +68,7 @@ class ProgramController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Program $program)
+    public function update(Request $request, Wisata $wisata)
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
@@ -79,15 +79,15 @@ class ProgramController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors());
         }
-        $program->name = $request->name;
-        $program->address = $request->address;
-        $program->description = $request->description;
-        $program->category = $request->category;
-        $program->save();
+        $wisata->name = $request->name;
+        $wisata->address = $request->address;
+        $wisata->description = $request->description;
+        $wisata->category = $request->category;
+        $wisata->save();
 
         return response()->json([
-            'Program updated successfully.',
-            new ProgramResource($program),
+            'Wisata updated successfully.',
+            new WisataResource($wisata),
         ]);
     }
     /**
@@ -96,9 +96,9 @@ class ProgramController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Program $program)
+    public function destroy(Wisata $wisata)
     {
-        $program->delete();
+        $wisata->delete();
         return response()->json('Program deleted successfully');
     }
 }

@@ -34,8 +34,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         return auth()->user();
     });
     Route::resource(
-        'programs',
-        App\Http\Controllers\API\ProgramController::class
+        '/wisata',
+        App\Http\Controllers\API\WisataController::class
     );
     // API route for logout user
     Route::post('/logout', [
